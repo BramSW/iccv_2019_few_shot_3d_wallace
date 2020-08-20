@@ -3,6 +3,8 @@ Keras==2.3.1
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 mayavi==4.6.2
+opencv==3.4.2
+py-opencv==3.4.2
 scikit-image==0.14.0
 scikit-learn==0.22.1
 scipy==1.4.1
