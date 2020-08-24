@@ -135,7 +135,7 @@ def old_split_ids(passphrase):
         mode_to_cat_to_model_ids["val"][category] = val_ids
         mode_to_cat_to_model_ids["test"][category] = test_ids
 
-    pickle.dump(mode_to_cat_to_model_ids, open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "wb"))
+    pickle.dump(mode_to_cat_to_model_ids, open("pickle_files/mode_to_cat_to_model_ids.pickle", "wb"))
     calc_and_save_average_category_voxels()
 
 def r2n2_split_ids(passphrase):
@@ -154,12 +154,12 @@ def r2n2_split_ids(passphrase):
         mode_to_cat_to_model_ids["val"][category] = val_ids
         mode_to_cat_to_model_ids["test"][category] = test_ids
 
-    pickle.dump(mode_to_cat_to_model_ids, open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "wb"))
+    pickle.dump(mode_to_cat_to_model_ids, open("pickle_files/mode_to_cat_to_model_ids.pickle", "wb"))
     calc_and_save_average_category_voxels()
         
 def calc_and_save_average_category_voxels():
     # Will do this from train
-    cat_to_train_model_ids = pickle.load(open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "rb"))["train"]
+    cat_to_train_model_ids = pickle.load(open("pickle_files/mode_to_cat_to_model_ids.pickle", "rb"))["train"]
     category_to_average_train_voxel = {}
     for category in categories:
         print("Calculating Average Vox for", category)
@@ -170,7 +170,7 @@ def calc_and_save_average_category_voxels():
             summed_voxel += new_voxel
         average_voxel = summed_voxel / len(cat_to_train_model_ids[category])
         category_to_average_train_voxel[category]  = average_voxel[..., np.newaxis]
-    pickle.dump(category_to_average_train_voxel, open(base_im_dir + '../category_to_average_train_voxel.pickle', 'wb'))
+    pickle.dump(category_to_average_train_voxel, open('pickle_files/category_to_average_train_voxel.pickle', 'wb'))
 
     
 def get_voxel_and_image_for_tuple(cat_and_id_tuple):
@@ -202,7 +202,7 @@ def get_im(category, model_id):
     return im
     
 def image_category_generator(n_per_yield=1, mode="train"):
-    mode_to_cat_to_model_ids = pickle.load(open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "rb"))
+    mode_to_cat_to_model_ids = pickle.load(open("pickle_files/mode_to_cat_to_model_ids.pickle", "rb"))
     cat_to_model_ids = mode_to_cat_to_model_ids[mode]
     cat_and_model_tuple_list = []
     for category, id_list in cat_to_model_ids.items():
@@ -225,11 +225,11 @@ def triple_generator(category_list=categories, n_per_yield=1, mode="train", inpu
     if re.search('[a-zA-Z]', category_list[0]):
         category_list = [category_name_to_id[cat_name] for cat_name in category_list]
     
-    mode_to_cat_to_model_ids = pickle.load(open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "rb"))
+    mode_to_cat_to_model_ids = pickle.load(open("pickle_files/mode_to_cat_to_model_ids.pickle", "rb"))
     cat_to_model_ids = mode_to_cat_to_model_ids[mode]
     if k_shot_prior:
         cat_to_train_ids = mode_to_cat_to_model_ids[mode]
-    cat_to_average_train_voxel = pickle.load(open(base_im_dir + '../category_to_average_train_voxel.pickle', 'rb'))
+    cat_to_average_train_voxel = pickle.load(open('pickle_files/category_to_average_train_voxel.pickle', 'rb'))
     cat_and_model_tuple_list = []
     for category in category_list:
         id_list = cat_to_model_ids[category]
@@ -268,11 +268,11 @@ def full_test_generator(category_list=categories, n_per_yield=1, mode="train", i
     if re.search('[a-zA-Z]', category_list[0]):
         category_list = [category_name_to_id[cat_name] for cat_name in category_list]
 
-    mode_to_cat_to_model_ids = pickle.load(open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "rb"))
+    mode_to_cat_to_model_ids = pickle.load(open("pickle_files/mode_to_cat_to_model_ids.pickle", "rb"))
     cat_to_model_ids = mode_to_cat_to_model_ids[mode]
     if k_shot_prior:
         cat_to_train_ids = mode_to_cat_to_model_ids[mode]
-    cat_to_average_train_voxel = pickle.load(open(base_im_dir + '../category_to_average_train_voxel.pickle', 'rb'))
+    cat_to_average_train_voxel = pickle.load(open(base_im_dir + 'pickle_files/category_to_average_train_voxel.pickle', 'rb'))
     cat_and_model_tuple_list = []
     for category in category_list:
         id_list = cat_to_model_ids[category]
@@ -320,11 +320,11 @@ def multiview_triple_generator(category_list=categories, n_per_yield=1, mode="tr
     if re.search('[a-zA-Z]', category_list[0]):
         category_list = [category_name_to_id[cat_name] for cat_name in category_list]
 
-    mode_to_cat_to_model_ids = pickle.load(open(base_im_dir + "../mode_to_cat_to_model_ids.pickle", "rb"))
+    mode_to_cat_to_model_ids = pickle.load(open("pickle_files/mode_to_cat_to_model_ids.pickle", "rb"))
     cat_to_model_ids = mode_to_cat_to_model_ids[mode]
     if k_shot_prior:
         cat_to_train_ids = mode_to_cat_to_model_ids[mode]
-    cat_to_average_train_voxel = pickle.load(open(base_im_dir + '../category_to_average_train_voxel.pickle', 'rb'))
+    cat_to_average_train_voxel = pickle.load(open(base_im_dir + 'pickle_files/category_to_average_train_voxel.pickle', 'rb'))
     cat_and_model_tuple_list = []
     for category in category_list:
         id_list = cat_to_model_ids[category]
