@@ -6,6 +6,6 @@ Once downloaded, change the paths in L14/15 of `highres_sampler.py`.
 The main training script is `train_iterative_RGB_refiner.py`. The most important argument is `--excluded-cats` which dictates which categories to hold out for few-shot learning.
 Most experiments presented in our paper have `--excluded-cats benches,cabinets,lamps,sofas,vessels,rifles`.
 
-Other scripts are remnants of various explorations/evaluations many of which didn't make it into the main paper. Feel free to experiment with these and let me know if you find anything interesting!
+Other scripts in `extra_files/` are remnants of various explorations/evaluations many of which didn't make it into the main paper. Them working out of the box is low probability, but feel free to experiment with these and let me know if you find anything interesting!
 
 Also please let me know if you have any questions concerning this code or the paper itself.
